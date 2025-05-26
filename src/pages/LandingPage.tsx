@@ -45,15 +45,8 @@ usePageTitle("Home - ProjectFlow");
             <div className="flex justify-center md:justify-start space-x-4">
               <Button
                 variant="primary"
-                className="px-6 py-3 rounded-lg font-semibold transition-transform transform hover:scale-105"
-              >
+                className="px-6 py-3 rounded-lg font-semibold transition-transform transform hover:scale-105">
                 Começar agora
-              </Button>
-              <Button
-                variant="outline"
-                className="px-6 py-3 rounded-lg font-semibold transition-transform transform hover:scale-105"
-              >
-                Saiba mais
               </Button>
             </div>
           </div>

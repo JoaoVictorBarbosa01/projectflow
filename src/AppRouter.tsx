@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
+import Signup from "./pages/Signup";
 
 
 // cria o roteador e exporta
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: "sobre", element: <About/> },
       { path: "privacidade", element: <PrivacyPolicy /> },
       { path: "termos", element: <TermsOfUse /> },
+      { path: "cadastrar", element: <Signup /> },
     
     ],
   },

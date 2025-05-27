@@ -2,6 +2,7 @@ import React, { useState } from "react";  // useState para controlar o menu aber
 import { Button } from "./Button";        // Componente botão reutilizável
 import { motion } from "framer-motion";  // Para animações
 import LogoImage from "../assets/logo/logo.webp"; // Importa logo
+import { Link } from "react-router-dom";
 
 export const Navbar: React.FC = () => {
   // Estado para abrir/fechar menu mobile
@@ -30,7 +31,9 @@ export const Navbar: React.FC = () => {
       {/* Botões para desktop - escondidos em telas pequenas */}
       <div className="hidden sm:flex space-x-3">
         <Button variant="outline">Entrar</Button>
-        <Button variant="primary">Cadastrar</Button>
+        <Link to="/Cadastrar">
+          <Button variant="outline">Cadastrar</Button>
+        </Link>
       </div>
 
       {/* Botão hamburger para mobile - visível só abaixo de "sm" */}
@@ -87,9 +90,12 @@ export const Navbar: React.FC = () => {
           <Button variant="outline" className="w-40">
             Entrar
           </Button>
-          <Button variant="primary" className="w-40">
+          <Link
+            to="/cadastrar"
+            className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
+          >
             Cadastrar
-          </Button>
+          </Link>
         </motion.div>
       )}
     </motion.nav>

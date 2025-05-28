@@ -3,9 +3,22 @@ import usePageTitle from "../hooks/usePageTitle";
 import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { supabase } from "../supabase";
+import GoogleButton from "../components/GoogleButton";
+
 
 const Signup: React.FC = () => {
   usePageTitle("Cadastrar - ProjectFlow");
+
+  const handleGoogleSignup = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+
+  if (error) {
+    console.error("Erro ao autenticar com Google:", error.message);
+  }
+};
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-white text-gray-800">
@@ -20,9 +33,7 @@ const Signup: React.FC = () => {
         </h1>
 
         {/* Botão de autenticação com Google */}
-        <button className="w-full py-2 px-4 mb-4 text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors">
-          Continuar com Google
-        </button>
+        <GoogleButton className="w-full mt-4" />
 
         {/* Separador */}
         <div className="flex items-center my-4">

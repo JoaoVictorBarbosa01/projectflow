@@ -1,10 +1,10 @@
 import React from "react";
 import usePageTitle from "../hooks/usePageTitle";
-import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "../supabase";
 import GoogleButton from "../components/GoogleButton";
+import LinkButton from "../components/LinkButton";
 
 
 const Signup: React.FC = () => {
@@ -33,7 +33,7 @@ const Signup: React.FC = () => {
         </h1>
 
         {/* Botão de autenticação com Google */}
-        <GoogleButton className="w-full mt-4" />
+        <GoogleButton className=" w-full" />
 
         {/* Separador */}
         <div className="flex items-center my-4">
@@ -83,17 +83,23 @@ const Signup: React.FC = () => {
             />
           </div>
 
-          <Button type="submit" variant="primary" className="w-full">
-            Criar conta
-          </Button>
+          <LinkButton to="/" variant="primary" className="w-full text-center" >
+              Criar conta
+          </LinkButton>
         </form>
 
         {/* Link para voltar para Home */}
         <div className="mt-6 text-center">
           <span className="text-sm text-gray-600">Já tem uma conta?</span>
           <Link to="/" className="ml-2 text-primary font-medium hover:underline">
-            Voltar para Home
+            Faça o Login
           </Link>
+          <p className="mt-2 text-sm text-gray-500">
+            Ou{" "}
+            <Link to="/" className="text-primary font-medium hover:underline">
+              retorne para a home
+            </Link>
+          </p>
         </div>
       </motion.div>
     </section>

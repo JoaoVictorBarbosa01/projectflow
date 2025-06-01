@@ -7,16 +7,20 @@ import ScrollToTop from "../components/ScrollToTop";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
-  const isLanding = pathname === "/";
+
+  // Rotas onde NÃO queremos Navbar e Footer
+  const noNavRoutes = ["/", "/dashboard", "/login", "/cadastrar",];
+
+  const hideNav = noNavRoutes.includes(pathname);
 
   return (
     <>
       <ScrollToTop />
-      <Navbar />
-      <main className={isLanding ? "" : "min-h-[calc(100vh-160px)] container mx-auto px-4 py-8"}>
+      {!hideNav && <Navbar />}
+      <main className={hideNav ? "" : "min-h-[calc(100vh-160px)] container mx-auto px-4 py-8"}>
         <Outlet />
       </main>
-      <Footer />
+      {hideNav && <Footer />}
     </>
   );
 };

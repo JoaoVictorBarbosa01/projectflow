@@ -1,8 +1,7 @@
 import React, { useState } from "react";  // useState para controlar o menu aberto/fechado
-import { Button } from "./Button";        // Componente botão reutilizável
 import { motion } from "framer-motion";  // Para animações
 import LogoImage from "../assets/logo/logo.webp"; // Importa logo
-import { Link } from "react-router-dom";
+import LinkButton from "../components/LinkButton";
 
 export const Navbar: React.FC = () => {
   // Estado para abrir/fechar menu mobile
@@ -30,10 +29,12 @@ export const Navbar: React.FC = () => {
 
       {/* Botões para desktop - escondidos em telas pequenas */}
       <div className="hidden sm:flex space-x-3">
-        <Button variant="outline">Entrar</Button>
-        <Link to="/Cadastrar">
-          <Button variant="outline">Cadastrar</Button>
-        </Link>
+        <LinkButton to="/" variant="primary">
+          Login
+        </LinkButton>
+        <LinkButton to="/cadastrar" variant="primary">
+          Cadastrar
+        </LinkButton>
       </div>
 
       {/* Botão hamburger para mobile - visível só abaixo de "sm" */}
@@ -87,15 +88,12 @@ export const Navbar: React.FC = () => {
           className="absolute top-full left-0 right-0 bg-white shadow-md flex flex-col items-center space-y-3 py-4 sm:hidden"
         >
           {/* Botões do menu mobile */}
-          <Button variant="outline" className="w-40">
-            Entrar
-          </Button>
-          <Link
-            to="/cadastrar"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
-          >
+          <LinkButton to="/" variant="primary">
+            Login
+          </LinkButton>
+          <LinkButton to="/cadastrar" variant="primary">
             Cadastrar
-          </Link>
+          </LinkButton>
         </motion.div>
       )}
     </motion.nav>

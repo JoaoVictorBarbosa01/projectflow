@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from '../components/Button';
 import usePageTitle from '../hooks/usePageTitle';
 import { motion } from 'framer-motion';
-import backgroundImage from '../assets/img/background.jpeg';
+import backgroundImage from '../assets/img/background2.jpeg';
 import logo from '../assets/logo/logoBranco2.png';
+import LinkButton from "../components/LinkButton";
 
 const LandingPage: React.FC = () => {
   usePageTitle("Home - ProjectFlow");
@@ -18,7 +18,7 @@ const LandingPage: React.FC = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+      <div className="absolute inset-0 bg-gray-800 bg-opacity-90 z-0"></div>
 
       {/* Conteúdo principal centralizado */}
       <main className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
@@ -26,29 +26,29 @@ const LandingPage: React.FC = () => {
         <motion.img
           src={logo}
           alt="Logo ProjectFlow"
-          className="w-38 h-24 mb-20"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 2 }}
-          transition={{ duration: 0.6 }}
+          className="w-34 h-24 mb-20 mr-6"
+          initial={{ opacity: 0, scale: 3 }}
+          animate={{ opacity: 1, scale: 2.5 }}
+          transition={{ duration: 1.5 }}
         
         />
 
         {/* Título */}
         <motion.h1
-          className="text-4xl md:text-5xl font-bold mb-4"
+          className="text-4xl md:text-5l font-bold mb-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 1 }}
         >
           Bem-vindo
         </motion.h1>
 
         {/* Subtítulo */}
         <motion.p
-          className="text-lg text-gray-300 mb-10 max-w-xl"
+          className="text-l text-gray-300 mb-10 max-w-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ delay: 0.2, duration: 1 }}
         >
           Gerencie projetos, tarefas e equipes com simplicidade e eficiência.<br />
           Interface intuitiva e recursos poderosos.
@@ -59,14 +59,14 @@ const LandingPage: React.FC = () => {
           className="flex space-x-4"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={{ delay: 0.4, duration: 1.5 }}
         >
-          <Button variant="primary" className="px-6 py-3 rounded-lg font-semibold">
+          <LinkButton to="/" variant="primary">
             Login
-          </Button>
-          <Button variant="secondary" className="px-6 py-3 rounded-lg font-semibold">
+          </LinkButton>
+          <LinkButton to="/cadastrar" variant="primary">
             Cadastrar
-          </Button>
+          </LinkButton>
         </motion.div>
       </main>
     </div>

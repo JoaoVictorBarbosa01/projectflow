@@ -5,6 +5,7 @@ import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
 
 // cria o roteador e exporta
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
       { path: "privacidade", element: <PrivacyPolicy /> },
       { path: "termos", element: <TermsOfUse /> },
       { path: "cadastrar", element: <Signup /> },
-    
+      { path: "/dashboard", element: <Dashboard />},    
     ],
   },
 ]);

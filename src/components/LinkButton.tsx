@@ -38,7 +38,7 @@ const LinkButton = ({
       )}
     >
       {/* Link do react-router-dom com estilos herdados do container pai */}
-      <Link to={to} {...props} className="block w-full h-full">
+      <Link to={to} {...props} className="block w-full h-full text-center">
         {children}
       </Link>
     </motion.div>

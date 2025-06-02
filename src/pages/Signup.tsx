@@ -1,24 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 import usePageTitle from "../hooks/usePageTitle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "../supabase";
 import GoogleButton from "../components/GoogleButton";
-import LinkButton from "../components/LinkButton";
-
 
 const Signup: React.FC = () => {
   usePageTitle("Cadastrar - ProjectFlow");
 
-  const handleGoogleSignup = async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-  });
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  if (error) {
-    console.error("Erro ao autenticar com Google:", error.message);
-  }
-};
+  const navigate = useNavigate();
+
+  const handleSignup = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setError(null);
+
+  const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name,
+        },
+        emailRedirectTo: "https://projectflow-pi.vercel.app/dashboard",
+      },
+    });
+
+    console.log("Signup resultado:", data);
+
+    if (error) {
+      console.error("Erro ao cadastrar:", error.message);
+      setError(error.message);
+      setLoading(false);
+      return;
+    }
+
+    const sessionCheck = await supabase.auth.getSession();
+    console.log("Sessão atual:", sessionCheck);
+
+    if (!sessionCheck.data.session) {
+      console.warn("Usuário não está logado ainda.");
+      setLoading(false);
+      return;
+    }
+
+    const { data: profile, error: profileFetchError } = await supabase
+      .from("profiles")
+      .select("id, full_name, email")
+      .eq("id", sessionCheck.data.session.user.id)
+      .single();
+
+    if (profileFetchError) {
+      console.error("Erro ao buscar perfil:", profileFetchError.message);
+    } else {
+      console.log("Perfil carregado com sucesso:", profile);
+    }
+
+    setLoading(false);
+    navigate("/verifique-email");
+  };
+
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-white text-gray-800">
@@ -32,18 +79,15 @@ const Signup: React.FC = () => {
           Criar sua conta
         </h1>
 
-        {/* Botão de autenticação com Google */}
         <GoogleButton className=" w-full" />
 
-        {/* Separador */}
         <div className="flex items-center my-4">
           <hr className="flex-1 border-gray-300" />
           <span className="mx-4 text-gray-400">ou</span>
           <hr className="flex-1 border-gray-300" />
         </div>
 
-        {/* Formulário de cadastro */}
-        <form className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               E-mail
@@ -51,6 +95,8 @@ const Signup: React.FC = () => {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="seuemail@email.com"
               required
@@ -64,6 +110,8 @@ const Signup: React.FC = () => {
             <input
               type="text"
               id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Seu nome"
               required
@@ -77,24 +125,33 @@ const Signup: React.FC = () => {
             <input
               type="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Digite uma senha"
               required
             />
           </div>
 
-          <LinkButton to="/" variant="primary" className="w-full text-center" >
-              Criar conta
-          </LinkButton>
+          <button
+            type="submit"
+            className="w-full bg-primary text-white font-semibold py-2 rounded-xl hover:bg-primary-dark transition"
+            disabled={loading}
+          >
+            {loading ? "Criando conta..." : "Criar conta"}
+          </button>
+
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>
 
-        {/* Link para voltar para Home */}
-        <div className="mt-6 text-center">
-          <span className="text-sm text-gray-600">Já tem uma conta?</span>
-          <Link to="/" className="ml-2 text-primary font-medium hover:underline">
-            Faça o Login
-          </Link>
-          <p className="mt-2 text-sm text-gray-500">
+        <div className="mt-6 text-center space-y-2">
+          <p className="text-sm text-gray-600">
+            Já tem uma conta?{" "}
+            <Link to="/" className="text-primary font-medium hover:underline">
+              Faça o Login
+            </Link>
+          </p>
+          <p className="text-sm text-gray-500">
             Ou{" "}
             <Link to="/" className="text-primary font-medium hover:underline">
               retorne para a home

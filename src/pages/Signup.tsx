@@ -16,55 +16,44 @@ const Signup: React.FC = () => {
 
   const navigate = useNavigate();
 
+ // Função de cadastro
   const handleSignup = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-  setError(null);
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-  const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: name,
+    try {
+      // Chama o Supabase Auth para registrar o usuário
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+          },
+          // Redireciona após o clique no link de verificação no e-mail
+          emailRedirectTo: "https://projectflow-pi.vercel.app/dashboard",// ou localhost:5173 se for local
         },
-        emailRedirectTo: "https://projectflow-pi.vercel.app/dashboard",
-      },
-    });
+      });
 
-    console.log("Signup resultado:", data);
+      if (error) {
+        console.error("Erro ao cadastrar:", error.message);
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
 
-    if (error) {
-      console.error("Erro ao cadastrar:", error.message);
-      setError(error.message);
+      // Redireciona para página de verificação imediatamente após sucesso
+      navigate("/verifique-email");
+
+    } catch (err: any) {
+      console.error("Erro inesperado:", err.message);
+      setError("Erro inesperado. Tente novamente.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const sessionCheck = await supabase.auth.getSession();
-    console.log("Sessão atual:", sessionCheck);
-
-    if (!sessionCheck.data.session) {
-      console.warn("Usuário não está logado ainda.");
-      setLoading(false);
-      return;
-    }
-
-    const { data: profile, error: profileFetchError } = await supabase
-      .from("profiles")
-      .select("id, full_name, email")
-      .eq("id", sessionCheck.data.session.user.id)
-      .single();
-
-    if (profileFetchError) {
-      console.error("Erro ao buscar perfil:", profileFetchError.message);
-    } else {
-      console.log("Perfil carregado com sucesso:", profile);
-    }
-
-    setLoading(false);
-    navigate("/verifique-email");
   };
+
 
 
   return (

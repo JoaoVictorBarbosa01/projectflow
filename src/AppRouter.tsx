@@ -8,7 +8,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import VerifyEmail from "./pages/VerifyEmail";
 import VerifyCallback from "./components/VerifyCallback";
-
+import Login from "./pages/Login";
 
 // cria o roteador e exporta
 export const router = createBrowserRouter([
@@ -24,6 +24,7 @@ export const router = createBrowserRouter([
       { path: "/dashboard", element: <Dashboard />},
       { path: "/verifique-email", element: <VerifyEmail />},  
       { path: "/verify-callback", element: <VerifyCallback />},
+      { path: "/login", element: <Login />},
     ],
   },
 ]);

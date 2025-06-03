@@ -32,7 +32,7 @@ const Signup: React.FC = () => {
             full_name: name,
           },
           // Redireciona após o clique no link de verificação no e-mail
-          emailRedirectTo: "https://projectflow-pi.vercel.app/dashboard",// ou localhost:5173 se for local
+          emailRedirectTo: "https://projectflow-pi.vercel.app/verify-callback",// ou localhost:5173 se for local
         },
       });
 

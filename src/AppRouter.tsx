@@ -7,6 +7,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import VerifyEmail from "./pages/VerifyEmail";
+import VerifyCallback from "./components/VerifyCallback";
 
 
 // cria o roteador e exporta
@@ -21,7 +22,8 @@ export const router = createBrowserRouter([
       { path: "termos", element: <TermsOfUse /> },
       { path: "cadastrar", element: <Signup /> },
       { path: "/dashboard", element: <Dashboard />},
-      { path: "/verifique-email", element: <VerifyEmail />},   
+      { path: "/verifique-email", element: <VerifyEmail />},  
+      { path: "/verify-callback", element: <VerifyCallback />},
     ],
   },
 ]);

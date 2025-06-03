@@ -61,7 +61,7 @@ const LandingPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 1.5 }}
         >
-          <LinkButton to="/" variant="primary">
+          <LinkButton to="/Login" variant="primary">
             Login
           </LinkButton>
           <LinkButton to="/cadastrar" variant="primary">
